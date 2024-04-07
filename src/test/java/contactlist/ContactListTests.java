@@ -30,6 +30,14 @@ public class ContactListTests extends BaseTests {
             throw new AssertionError("New created contact is not found", e);
         }
         assertTrue(contactID.isDisplayed(), "Created contact's card isn't displayed");
+        WebElement fullContactName = driver.findElement(By.xpath("//td[@style='font-size:95%;' and contains(text(),'" + USER_FIRSTNAME + " " + uniqueLastName + "')]"));
+        WebElement addressValue = driver.findElement(By.xpath("//td[contains(text(),'" + BASE_ADDRESS + "')]"));
+        String[] nameParts = fullContactName.getText().split(" ");
+        String actualFirstName = nameParts[0];
+        String actualLastName = nameParts[1];
+        assertEquals(USER_FIRSTNAME, actualFirstName, "First name of the created contact doesn't match the expected value");
+        assertEquals(uniqueLastName, actualLastName, "Last name of the created contact doesn't match the expected value");
+        assertEquals(BASE_ADDRESS, addressValue.getText(), "Address of the created contact doesn't match the expected value");
     }
 
     @Test
